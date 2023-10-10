@@ -4,6 +4,7 @@ import CreateTodo from "./pages/CreateTodo";
 import Register from "./auth/Register";
 import { Route, Routes } from "react-router-dom";
 import Login from "./auth/Login";
+import Code from "./auth/Code";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/code" element={<Code />} />
       </Routes>
       {/* <CreateTodo /> */}
       {/* <Register /> */}
