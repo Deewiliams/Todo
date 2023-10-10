@@ -1,12 +1,12 @@
-import './App.css';
+import { Container } from "@mui/material";
+import "./App.css";
+import CreateTodo from "./pages/CreateTodo";
 
 function App() {
   return (
-    <div>
-   <h1>
-    hello world
-   </h1>
-    </div>
+    <Container>
+      <CreateTodo />
+    </Container>
   );
 }
 
