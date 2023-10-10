@@ -15,11 +15,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Register() {
+export default function Login() {
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  async function Login() {
+  async function signIn() {
     try {
       const { user } = await Auth.signUp({
         username,
@@ -35,7 +35,7 @@ export default function Register() {
       <Box sx={{ flexGrow: 1, marginTop: "150px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={6}>
-            <img src={login} alt="register " />
+            <img width="500px" src={login} alt="register " />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <Typography style={{ fontSize: "50px", textAlign: "center" }}>
@@ -71,12 +71,12 @@ export default function Register() {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <Button
-                    onClick={signUp}
+                    onClick={signIn}
                     fullWidth
                     variant="contained"
                     style={{ textTransform: "none" }}
                   >
-                    Sign up
+                    Sign in
                   </Button>
                 </Grid>
               </Grid>
