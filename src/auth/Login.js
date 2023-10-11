@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import {
+  Alert,
   Button,
   CircularProgress,
   IconButton,
@@ -20,6 +21,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 export default function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -38,7 +40,7 @@ export default function Login() {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        console.log("error signing in", error);
+        setErrorMessage(error.message);
       }
     },
   });
@@ -58,7 +60,11 @@ export default function Login() {
               Application
             </Typography>
             <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
+            {errorMessage ? (
+                <Alert severity="error"> {errorMessage}</Alert>
+              ) : null}
               <Grid container spacing={2}>
+              
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <label>Email</label>
                   <TextField

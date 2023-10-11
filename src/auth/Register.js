@@ -136,13 +136,11 @@ export default function Register() {
                 </Grid>
               </Grid>
               <br />
-              <Typography style={{textAlign: "end"}}>
+              <Typography style={{ textAlign: "end" }}>
                 Already have an account?
-               <span>
-                <Link to="/">
-               Login
-                </Link>
-               </span>
+                <span>
+                  <Link to="/">Login</Link>
+                </span>
               </Typography>
             </Box>
           </Grid>
