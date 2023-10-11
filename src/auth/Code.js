@@ -1,19 +1,26 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Button, TextField, Typography } from "@mui/material";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import { Auth } from "aws-amplify";
 
 export default function Code() {
+  const [code, setCode] = React.useState("");
+  const username = JSON.parse(localStorage.getItem("verifyCodeEmail"));
+
+  console.log('====================================');
+  console.log("local",username);
+  console.log('====================================');
+  async function confirmSignUp() {
+    try {
+    const verify =   await Auth.confirmSignUp(username, code);
+    console.log('====================================');
+    console.log("verifird",verify);
+    console.log('====================================');
+    } catch (error) {
+      console.log("error confirming sign up", error);
+    }
+  }
   return (
     <>
       <div
@@ -51,6 +58,8 @@ export default function Code() {
               label="Code"
               variant="outlined"
               placeholder="Enter your verification code"
+              value={code}
+              onChange={(e)=>setCode(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -58,6 +67,7 @@ export default function Code() {
       <br />
       <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
         <Button
+        onClick={confirmSignUp}
           style={{ width: "400px", textTransform: "none" }}
           variant="contained"
         >

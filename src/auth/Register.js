@@ -21,10 +21,12 @@ export default function Register() {
 
   async function signUp() {
     try {
-      const { user } = await Auth.signUp({
-        username,
-        password,
-      });
+        // localStorage.getItem("verifyCodeEmail", {username});
+        const { user } = await Auth.signUp({
+            username,
+            password,
+        });
+        localStorage.setItem("verifyCodeEmail", JSON.stringify(username));
       console.log(user);
     } catch (error) {
       console.log("error signing up:", error);
