@@ -11,7 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import AddTodo from "../component/AddTodo";
+import DialogModel from "../component/Dialog";
 
 export default function MainPage() {
   const [auth, setAuth] = React.useState(true);
@@ -80,7 +80,7 @@ export default function MainPage() {
         </Toolbar>
       </AppBar>
       <br />
-      <AddTodo />
+      <DialogModel />
     </Box>
   );
 }
