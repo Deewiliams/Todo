@@ -13,6 +13,7 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/code" element={<Code />} />
+        <Route path="/main" element={<CreateTodo />} />
       </Routes>
       {/* <CreateTodo /> */}
       {/* <Register /> */}

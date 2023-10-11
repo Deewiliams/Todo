@@ -1,35 +1,74 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Auth } from "aws-amplify";
 import login from "../images/signin.svg";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import { useFormik } from "formik";
+import { loginInitialvalues, loginSchema } from "../utils/schema/login";
+import { useNavigate } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
-  const [username, setUserName] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  async function signIn() {
-    try {
-      const { user } = await Auth.signUp({
-        username,
-        password,
-      });
-      console.log(user);
-    } catch (error) {
-      console.log("error signing up:", error);
-    }
-  }
+  const formik = useFormik({
+    initialValues: loginInitialvalues,
+    validationSchema: loginSchema,
+    onSubmit: async (values) => {
+      try {
+        setIsLoading(true);
+        const user = await Auth.signIn({
+          username: values.username,
+          password: values.password,
+        });
+        console.log("login user", user);
+        navigate("/main");
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log("error signing in", error);
+      }
+      // try {
+      //   setIsLoading(true);
+      //   const { user } = await Auth.signUp({
+      //     username: values.username,
+      //     password: values.password,
+      //   });
+      //   localStorage.setItem("verifyCodeEmail", JSON.stringify(user.username));
+      //   console.log(user);
+      //   navigate("/code");
+      //   setIsLoading(false);
+      // } catch (error) {
+      //   setErrorMessage(error.message);
+      //   setIsLoading(false);
+      //   console.log("error", error);
+      // }
+    },
+  });
+
+  // async function signIn() {
+  //   try {
+  //     const { user } = await Auth.signUp({
+  //       username,
+  //       password,
+  //     });
+  //     console.log(user);
+  //   } catch (error) {
+  //     console.log("error signing up:", error);
+  //   }
+  // }
   return (
     <>
       <Box sx={{ flexGrow: 1, marginTop: "150px" }}>
@@ -49,34 +88,65 @@ export default function Login() {
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <TextField
                     fullWidth
-                    id="outlined-basic"
-                    label="Email"
-                    variant="outlined"
-                    placeholder="todo@gamil.com"
-                    value={username}
-                    onChange={(e) => setUserName(e.target.value)}
+                    id="email"
+                    type="email"
+                    name="username"
+                    placeholder="hello@gmail.com"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.username && Boolean(formik.errors.username)
+                    }
+                    helperText={
+                      formik.touched.username && formik.errors.username
+                    }
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <label>Password</label>
                   <TextField
                     fullWidth
-                    id="outlined-basic"
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    id="outlined-code-input"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    autoComplete="current-code"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.password && Boolean(formik.errors.password)
+                    }
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <Button
-                    onClick={signIn}
+                    onClick={() => {
+                      formik.handleSubmit();
+                    }}
                     fullWidth
                     variant="contained"
                     style={{ textTransform: "none" }}
                   >
-                    Sign in
+                    {isLoading && isLoading ? (
+                      <CircularProgress size={24} style={{ color: "white" }} />
+                    ) : (
+                      " Sign in"
+                    )}
                   </Button>
                 </Grid>
               </Grid>
