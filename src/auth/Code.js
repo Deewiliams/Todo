@@ -8,15 +8,15 @@ export default function Code() {
   const [code, setCode] = React.useState("");
   const username = JSON.parse(localStorage.getItem("verifyCodeEmail"));
 
-  console.log('====================================');
-  console.log("local",username);
-  console.log('====================================');
+  console.log("====================================");
+  console.log("local", username);
+  console.log("====================================");
   async function confirmSignUp() {
     try {
-    const verify =   await Auth.confirmSignUp(username, code);
-    console.log('====================================');
-    console.log("verifird",verify);
-    console.log('====================================');
+      const verify = await Auth.confirmSignUp(username, code);
+      console.log("====================================");
+      console.log("verifird", verify);
+      console.log("====================================");
     } catch (error) {
       console.log("error confirming sign up", error);
     }
@@ -49,8 +49,12 @@ export default function Code() {
           alignContent: "center",
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
+        <Grid
+          container
+          spacing={2}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Grid item xs={6}>
             <TextField
               type="number"
               fullWidth
@@ -59,7 +63,7 @@ export default function Code() {
               variant="outlined"
               placeholder="Enter your verification code"
               value={code}
-              onChange={(e)=>setCode(e.target.value)}
+              onChange={(e) => setCode(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -67,8 +71,8 @@ export default function Code() {
       <br />
       <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
         <Button
-        onClick={confirmSignUp}
-          style={{ width: "400px", textTransform: "none" }}
+          onClick={confirmSignUp}
+          style={{ textTransform: "none" }}
           variant="contained"
         >
           Verify code
