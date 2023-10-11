@@ -13,7 +13,7 @@ import { Auth } from "aws-amplify";
 import login from "../images/signin.svg";
 import { useFormik } from "formik";
 import { loginInitialvalues, loginSchema } from "../utils/schema/login";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -40,35 +40,9 @@ export default function Login() {
         setIsLoading(false);
         console.log("error signing in", error);
       }
-      // try {
-      //   setIsLoading(true);
-      //   const { user } = await Auth.signUp({
-      //     username: values.username,
-      //     password: values.password,
-      //   });
-      //   localStorage.setItem("verifyCodeEmail", JSON.stringify(user.username));
-      //   console.log(user);
-      //   navigate("/code");
-      //   setIsLoading(false);
-      // } catch (error) {
-      //   setErrorMessage(error.message);
-      //   setIsLoading(false);
-      //   console.log("error", error);
-      // }
     },
   });
 
-  // async function signIn() {
-  //   try {
-  //     const { user } = await Auth.signUp({
-  //       username,
-  //       password,
-  //     });
-  //     console.log(user);
-  //   } catch (error) {
-  //     console.log("error signing up:", error);
-  //   }
-  // }
   return (
     <>
       <Box sx={{ flexGrow: 1, marginTop: "150px" }}>
@@ -86,6 +60,7 @@ export default function Login() {
             <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <label>Email</label>
                   <TextField
                     fullWidth
                     id="email"
@@ -150,6 +125,16 @@ export default function Login() {
                   </Button>
                 </Grid>
               </Grid>
+              <br />
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography>Forgotten password</Typography>
+                <Typography>
+                  Don't have an account?{" "}
+                  <span style={{ color: "blue" }}>
+                    <Link to="/register">Register</Link>
+                  </span>
+                </Typography>
+              </div>
             </Box>
           </Grid>
         </Grid>

@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { Auth } from "aws-amplify";
 import register from "../images/register.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -135,6 +135,15 @@ export default function Register() {
                   </Button>
                 </Grid>
               </Grid>
+              <br />
+              <Typography style={{textAlign: "end"}}>
+                Already have an account?
+               <span>
+                <Link to="/">
+               Login
+                </Link>
+               </span>
+              </Typography>
             </Box>
           </Grid>
         </Grid>

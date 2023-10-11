@@ -10,8 +10,8 @@ function App() {
   return (
     <Container>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/code" element={<Code />} />
         <Route path="/main" element={<CreateTodo />} />
       </Routes>
