@@ -1,26 +1,44 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Auth } from "aws-amplify";
+import {
+  verifyCodeSchema,
+  verifyCodeValues,
+} from "../utils/schema/verificationCode";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 export default function Code() {
-  const [code, setCode] = React.useState("");
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const username = JSON.parse(localStorage.getItem("verifyCodeEmail"));
 
-  console.log("====================================");
-  console.log("local", username);
-  console.log("====================================");
-  async function confirmSignUp() {
-    try {
-      const verify = await Auth.confirmSignUp(username, code);
-      console.log("====================================");
-      console.log("verifird", verify);
-      console.log("====================================");
-    } catch (error) {
-      console.log("error confirming sign up", error);
-    }
-  }
+  const formik = useFormik({
+    initialValues: verifyCodeValues,
+    validationSchema: verifyCodeSchema,
+    onSubmit: async (values) => {
+      try {
+        setIsLoading(true);
+        await Auth.confirmSignUp(username, values.verificationCode);
+        navigate("/login");
+        setIsLoading(false);
+      } catch (error) {
+        setErrorMessage(error.message);
+        setIsLoading(false);
+      }
+    },
+  });
+
   return (
     <>
       <div
@@ -55,15 +73,31 @@ export default function Code() {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Grid item xs={6}>
+            {errorMessage ? (
+              <Stack sx={{ width: "100%" }} spacing={2}>
+                <Alert severity="error">
+                  {" "}
+                  <span style={{ color: "red" }}>{errorMessage}</span>
+                </Alert>
+              </Stack>
+            ) : null}
+            <br />
             <TextField
-              type="number"
+              type="text"
               fullWidth
+              name="verificationCode"
               id="outlined-basic"
-              label="Code"
               variant="outlined"
-              placeholder="Enter your verification code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
+              value={formik.values.verificationCode}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.verificationCode &&
+                Boolean(formik.errors.verificationCode)
+              }
+              helperText={
+                formik.touched.verificationCode &&
+                formik.errors.verificationCode
+              }
             />
           </Grid>
         </Grid>
@@ -71,11 +105,17 @@ export default function Code() {
       <br />
       <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
         <Button
-          onClick={confirmSignUp}
+          onClick={() => {
+            formik.handleSubmit();
+          }}
           style={{ textTransform: "none" }}
           variant="contained"
         >
-          Verify code
+          {isLoading && isLoading ? (
+            <CircularProgress size={24} style={{ color: "white" }} />
+          ) : (
+            " Verify code"
+          )}
         </Button>
       </Grid>
     </>
