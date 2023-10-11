@@ -11,6 +11,7 @@ import * as mutations from "../graphql/mutations";
 import { API } from "aws-amplify";
 
 export default function AddTodo() {
+  const id = JSON.parse(localStorage.getItem("userID"));
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
@@ -20,13 +21,13 @@ export default function AddTodo() {
           query: mutations.createTodo,
           variables: {
             input: {
+              id: id,
               title: values.title,
               description: values.description,
             },
           },
         });
-        console.log("newTodo",newTodo);
-
+        console.log("newTodo", newTodo);
       } catch (error) {
         console.log("error", error);
       }

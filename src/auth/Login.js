@@ -36,7 +36,9 @@ export default function Login() {
           username: values.username,
           password: values.password,
         });
-        console.log("login user", user);
+        localStorage.setItem("userID", JSON.stringify(user?.attributes?.sub));
+        // localStorage.setItem("verifyCodeEmail", JSON.stringify(user?.attributes?.email));
+        console.log("login user", user?.attributes?.sub);
         navigate("/main");
         setIsLoading(false);
       } catch (error) {
@@ -61,11 +63,10 @@ export default function Login() {
               Application
             </Typography>
             <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
-            {errorMessage ? (
+              {errorMessage ? (
                 <Alert severity="error"> {errorMessage}</Alert>
               ) : null}
               <Grid container spacing={2}>
-              
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <label>Email</label>
                   <TextField

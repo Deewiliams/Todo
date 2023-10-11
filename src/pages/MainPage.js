@@ -16,6 +16,7 @@ import DialogModel from "../component/Dialog";
 export default function MainPage() {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const username = JSON.parse(localStorage.getItem("verifyCodeEmail"));
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -75,6 +76,7 @@ export default function MainPage() {
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
+              {username}
             </div>
           )}
         </Toolbar>
