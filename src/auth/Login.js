@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   CircularProgress,
+  Container,
   IconButton,
   InputAdornment,
   TextField,
@@ -46,7 +47,7 @@ export default function Login() {
   });
 
   return (
-    <>
+    <Container>
       <Box sx={{ flexGrow: 1, marginTop: "150px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -145,6 +146,6 @@ export default function Login() {
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Container>
   );
 }

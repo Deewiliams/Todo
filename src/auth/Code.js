@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   CircularProgress,
+  Container,
   Stack,
   TextField,
   Typography,
@@ -40,7 +41,7 @@ export default function Code() {
   });
 
   return (
-    <>
+    <Container>
       <div
         style={{
           display: "flex",
@@ -118,6 +119,6 @@ export default function Code() {
           )}
         </Button>
       </Grid>
-    </>
+    </Container>
   );
 }
