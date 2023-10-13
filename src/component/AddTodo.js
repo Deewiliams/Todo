@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button, TextField } from "@mui/material";
+import { Alert, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import {
   createTodoInitialvalues,
@@ -14,13 +14,14 @@ import LoadingButton from "./LoadingButton";
 export default function AddTodo() {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
     onSubmit: async (values) => {
       try {
         setIsLoading(true);
-        const newTodo = await API.graphql({
+        await API.graphql({
           query: mutations.createAddTodoList,
           variables: {
             input: {
@@ -31,15 +32,15 @@ export default function AddTodo() {
           },
         });
         setIsLoading(false);
-        console.log("newTodo", newTodo);
       } catch (error) {
-        console.log("error", error);
+        setErrorMessage(error.message);
       }
     },
   });
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
+        {errorMessage ? <Alert severity="error"> {errorMessage}</Alert> : null}
         <Grid item xs={12}>
           <TextField
             fullWidth
