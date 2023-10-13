@@ -9,14 +9,17 @@ import {
 } from "../utils/schema/createTodo";
 import * as mutations from "../graphql/mutations";
 import { API } from "aws-amplify";
+import LoadingButton from "./LoadingButton";
 
 export default function AddTodo() {
   const id = JSON.parse(localStorage.getItem("userID"));
+  const [isLoading, setIsLoading] = React.useState(false);
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
     onSubmit: async (values) => {
       try {
+        setIsLoading(true);
         const newTodo = await API.graphql({
           query: mutations.createAddTodoList,
           variables: {
@@ -27,6 +30,7 @@ export default function AddTodo() {
             },
           },
         });
+        setIsLoading(false);
         console.log("newTodo", newTodo);
       } catch (error) {
         console.log("error", error);
@@ -74,7 +78,7 @@ export default function AddTodo() {
           onClick={formik.handleSubmit}
           style={{ backgroundColor: "black", color: "white" }}
         >
-          Save
+          {isLoading && isLoading ? <LoadingButton /> : "Save"}
         </Button>
       </div>
     </Box>
