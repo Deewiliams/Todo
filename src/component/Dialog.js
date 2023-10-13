@@ -7,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import AddTodo from "./AddTodo";
+import ListTodo from "../pages/ListDo";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +25,7 @@ export default function DialogModel() {
   };
 
   return (
+ <>
     <div
       style={{
         display: "flex",
@@ -58,6 +60,8 @@ export default function DialogModel() {
           </DialogContentText>
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+      <ListTodo />    
+ </>
   );
 }
