@@ -1,5 +1,12 @@
-type Todo @model @auth(rules: [{allow: public}]) {
+type AddTodoList @model @auth(rules: [{allow: public}]) {
   id: ID!
+  todoID: ID! @index(name: "byTodo")
   title: String
   description: String
 }
+
+type Todo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  AddTodoLists: [AddTodoList] @hasMany(indexName: "byTodo", fields: ["id"])
+}
+ 

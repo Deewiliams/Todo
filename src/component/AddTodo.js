@@ -18,10 +18,10 @@ export default function AddTodo() {
     onSubmit: async (values) => {
       try {
         const newTodo = await API.graphql({
-          query: mutations.createTodo,
+          query: mutations.createAddTodoList,
           variables: {
             input: {
-              id: id,
+              todoID: id,
               title: values.title,
               description: values.description,
             },

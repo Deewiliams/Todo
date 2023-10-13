@@ -23,20 +23,14 @@ export default function CreateTodo() {
 
   const createTodoFunction = async () => {
     try {
-        const newTodo = await API.graphql({
-            query: mutations.createTodo,
-            variables: { input: todoDetails },
-          });
-      
-          console.log("====================================");
-          console.log("adding todo lis", newTodo);
-          console.log("====================================");
+      const newTodo = await API.graphql({
+        query: mutations.createTodo,
+        variables: { input: todoDetails },
+      });
+      console.log("adding todo list", newTodo);
     } catch (error) {
-        console.log('====================================');
-        console.log(error);
-        console.log('====================================');
+      console.log(error);
     }
-    
   };
 
   return (
@@ -51,7 +45,7 @@ export default function CreateTodo() {
           />
         </Grid>
         <Grid item xs={4}>
-          <Button onClick={createTodoFunction}  fullWidth variant="contained">
+          <Button onClick={createTodoFunction} fullWidth variant="contained">
             Add todo
           </Button>
         </Grid>
