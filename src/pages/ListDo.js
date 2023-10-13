@@ -18,13 +18,15 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ListTodo() {
   const id = JSON.parse(localStorage.getItem("userID"));
+  const [todos, setTodos] = React.useState([])
   const fetchAllTodos = async () => {
     try {
-      const oneTodo = await API.graphql({
+      const listTodos = await API.graphql({
         query: queries.listAddTodoLists,
         variables: { id: id },
       });
-      console.log("list todos", oneTodo);
+      setTodos(listTodos?.data?.listAddTodoLists?.items)
+      console.log("list",todos);
     } catch (error) {
       console.log("errror", error);
     }
@@ -35,10 +37,11 @@ export default function ListTodo() {
   }, [id]);
   return (
     <Container>
-      <Box sx={{ flexGrow: 1 }}>
+         <Card todos={todos} />
+      {/* <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6} lg={3}>
-            <Card />
+           
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={3}>
             <Card />
@@ -47,7 +50,7 @@ export default function ListTodo() {
             <Card />
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </Container>
   );
 }
