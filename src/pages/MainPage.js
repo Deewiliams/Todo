@@ -12,6 +12,7 @@ import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import DialogModel from "../component/Dialog";
+import { Container } from "@mui/material";
 
 export default function MainPage() {
   const [auth, setAuth] = React.useState(true);
@@ -82,7 +83,9 @@ export default function MainPage() {
         </Toolbar>
       </AppBar>
       <br />
-      <DialogModel />
+      <Container>
+        <DialogModel />
+      </Container>
     </Box>
   );
 }
