@@ -28,9 +28,9 @@ export default function CardList({ todos }) {
                   {todo?.description}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size="small">Share</Button>
-                  <Button size="small">Learn More</Button>
+                <CardActions style={{display: "flex", justifyContent: "center"}}>
+                  <Button size="small"  style={{backgroundColor: "blue", color: "white"}}>Edit</Button>
+                  <Button size="small" style={{backgroundColor: "red", color: "white"}}>Delete</Button>
                 </CardActions>
               </Card>
             </Grid>
