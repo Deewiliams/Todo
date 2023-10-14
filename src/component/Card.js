@@ -6,8 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box, Grid } from "@mui/material";
+import Loading from "./Loading";
 
-export default function CardList({ todos }) {
+export default function CardList({ todos,loading }) {
+    if(loading){
+        return <Loading />
+    }
   return (
     <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
       <Grid container spacing={2}>

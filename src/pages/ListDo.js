@@ -20,13 +20,16 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function ListTodo() {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [todos, setTodos] = React.useState([]);
+  const [loading, setLoading] = React.useState(false)
   const fetchAllTodos = async () => {
     try {
+        setLoading(true)
       const listTodos = await API.graphql({
         query: queries.listAddTodoLists,
         variables: { id: id },
       });
       setTodos(listTodos?.data?.listAddTodoLists?.items);
+      setLoading(false)
       console.log("list", todos);
     } catch (error) {
       console.log("errror", error);
@@ -39,7 +42,7 @@ export default function ListTodo() {
   return (
     <Container>
       <Search />
-      <Card todos={todos} />
+      <Card todos={todos} loading={loading} />
     </Container>
   );
 }
