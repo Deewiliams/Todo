@@ -22,7 +22,7 @@ export default function Search() {
             fullWidth
             id="outlined-basic"
             variant="outlined"
-            placeholder="Search your todo here"
+            placeholder="Search your todo list"
           />
         </Grid>
       </Grid>
