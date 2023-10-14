@@ -17,7 +17,7 @@ export default function CardList({ todos }) {
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                   sx={{ height: 140 }}
-                  image="/static/images/cards/contemplative-reptile.jpg"
+                  image="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8&auto=format&fit=crop&w=1080&q=80"
                   title="green iguana"
                 />
                 <CardContent>
@@ -29,7 +29,7 @@ export default function CardList({ todos }) {
                   </Typography>
                 </CardContent>
                 <CardActions style={{display: "flex", justifyContent: "center"}}>
-                  <Button size="small"  style={{backgroundColor: "blue", color: "white"}}>Edit</Button>
+                  <Button size="small"  style={{backgroundColor: "black", color: "white"}}>Edit</Button>
                   <Button size="small" style={{backgroundColor: "red", color: "white"}}>Delete</Button>
                 </CardActions>
               </Card>
