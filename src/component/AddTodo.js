@@ -42,7 +42,7 @@ export default function AddTodo() {
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values,{resetForm}) => {
       try {
         setIsLoading(true);
         if (selectedTodo) {
@@ -71,6 +71,7 @@ export default function AddTodo() {
           });
         }
         setIsLoading(false);
+        resetForm()
         fetchAllTodos()
         handleClose()
       } catch (error) {
