@@ -1,8 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import Card from "../component/Card";
 import { Container } from "@mui/material";
 import * as queries from "../graphql/queries";

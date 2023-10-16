@@ -5,16 +5,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-
 import { Box, Grid } from "@mui/material";
 import Loading from "./Loading";
-import AddTodo from "./AddTodo";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,7 +34,7 @@ export default function CardList({
       <Grid container spacing={2}>
         {todos?.map((todo) => (
           <>
-            <Grid item xs={12} sm={12} md={6} lg={3}>
+            <Grid item xs={12} sm={6} md={3} lg={3}>
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                   sx={{ height: 140 }}
