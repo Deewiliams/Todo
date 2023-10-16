@@ -27,10 +27,14 @@ export default function DialogModel() {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
+  const [selectedTodo, setSelectedTodo] = React.useState();
+  console.log("====================================");
+  console.log("selectedTodo", selectedTodo);
+  console.log("====================================");
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = function () {
     setOpen(true);
   };
 
@@ -158,7 +162,11 @@ export default function DialogModel() {
           </DialogActions>
         </Dialog>
       </div>
-      <ListTodo   />
+      <ListTodo
+        formik={formik}
+        handleClickOpen={handleClickOpen}
+        setSelectedTodo={setSelectedTodo}
+      />
     </>
   );
 }

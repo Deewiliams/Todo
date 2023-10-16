@@ -20,21 +20,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CardList({ todos, loading }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function CardList({
+  todos,
+  loading,
+  formik,
+  handleClickOpen,
+  setSelectedTodo,
+}) {
 
   const handleEdit = (todo) => {
-    console.log("====================================");
-    console.log("edit todo", todo);
-    console.log("====================================");
+    setSelectedTodo(todo?.id);
+    formik.setFieldValue("title", todo.title);
+    formik.setFieldValue("description", todo.description);
   };
   if (loading) {
     return <Loading />;
@@ -84,28 +81,6 @@ export default function CardList({ todos, loading }) {
           </>
         ))}
       </Grid>
-
-      <div>
-        <Dialog
-          fullWidth
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              <AddTodo  />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleClose}>Agree</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
     </Box>
   );
 }

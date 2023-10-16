@@ -17,19 +17,21 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function ListTodo() {
+export default function ListTodo({ formik, handleClickOpen,setSelectedTodo }) {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [todos, setTodos] = React.useState([]);
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false);
+
+  
   const fetchAllTodos = async () => {
     try {
-        setLoading(true)
+      setLoading(true);
       const listTodos = await API.graphql({
         query: queries.listAddTodoLists,
         variables: { id: id },
       });
       setTodos(listTodos?.data?.listAddTodoLists?.items);
-      setLoading(false)
+      setLoading(false);
       console.log("list", todos);
     } catch (error) {
       console.log("errror", error);
@@ -42,7 +44,13 @@ export default function ListTodo() {
   return (
     <Container>
       <Search />
-      <Card todos={todos} loading={loading} />
+      <Card
+        todos={todos}
+        loading={loading}
+        formik={formik}
+        handleClickOpen={handleClickOpen}
+        setSelectedTodo={setSelectedTodo}
+      />
     </Container>
   );
 }
