@@ -11,7 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import DialogModel from "../component/Dialog";
+import DialogModel from "../component/AddTodo";
 import { Container } from "@mui/material";
 
 export default function MainPage() {

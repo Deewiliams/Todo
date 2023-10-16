@@ -1,6 +1,4 @@
-import { Container } from "@mui/material";
 import "./App.css";
-import CreateTodo from "./pages/CreateTodo";
 import Register from "./auth/Register";
 import { Route, Routes } from "react-router-dom";
 import Login from "./auth/Login";

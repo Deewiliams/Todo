@@ -17,12 +17,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function ListTodo({ formik, handleClickOpen,setSelectedTodo }) {
+export default function ListTodo({ formik, handleClickOpen, setSelectedTodo }) {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [todos, setTodos] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
-  
   const fetchAllTodos = async () => {
     try {
       setLoading(true);
@@ -32,7 +31,6 @@ export default function ListTodo({ formik, handleClickOpen,setSelectedTodo }) {
       });
       setTodos(listTodos?.data?.listAddTodoLists?.items);
       setLoading(false);
-      console.log("list", todos);
     } catch (error) {
       console.log("errror", error);
     }
