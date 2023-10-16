@@ -28,10 +28,6 @@ export default function DialogModel() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [selectedTodo, setSelectedTodo] = React.useState();
-  console.log("====================================");
-  console.log("selectedTodo", selectedTodo);
-  console.log("====================================");
-
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = function () {
@@ -47,16 +43,29 @@ export default function DialogModel() {
     onSubmit: async (values) => {
       try {
         setIsLoading(true);
-        await API.graphql({
-          query: mutations.createAddTodoList,
-          variables: {
-            input: {
-              todoID: id,
-              title: values.title,
-              description: values.description,
+        if (selectedTodo) {
+          await API.graphql({
+            query: mutations.updateAddTodoList,
+            variables: {
+              input: {
+                id: selectedTodo,
+                title: values.title,
+                description: values.description,
+              },
             },
-          },
-        });
+          });
+        } else {
+          await API.graphql({
+            query: mutations.createAddTodoList,
+            variables: {
+              input: {
+                todoID: id,
+                title: values.title,
+                description: values.description,
+              },
+            },
+          });
+        }
         setIsLoading(false);
       } catch (error) {
         setErrorMessage(error.message);
@@ -136,18 +145,6 @@ export default function DialogModel() {
                     />
                   </Grid>
                 </Grid>
-                {/* <br />
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                  </DialogActions>
-                  <Button
-                    onClick={formik.handleSubmit}
-                    style={{ backgroundColor: "black", color: "white" }}
-                  >
-                    {isLoading && isLoading ? <LoadingButton /> : "Save"}
-                  </Button>
-                </div> */}
               </Box>
             </DialogContentText>
           </DialogContent>
