@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Button, DialogActions, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import {
   createTodoInitialvalues,
@@ -15,6 +15,16 @@ export default function AddTodo() {
   const id = JSON.parse(localStorage.getItem("userID"));
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(true);
+  };
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
@@ -37,6 +47,8 @@ export default function AddTodo() {
       }
     },
   });
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -74,7 +86,9 @@ export default function AddTodo() {
       </Grid>
       <br />
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button>Cancel</Button>
+      <DialogActions>
+        <Button onClick={handleClose} >Cancel</Button>
+      </DialogActions>
         <Button
           onClick={formik.handleSubmit}
           style={{ backgroundColor: "black", color: "white" }}

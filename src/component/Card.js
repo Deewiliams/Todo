@@ -5,13 +5,40 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+
 import { Box, Grid } from "@mui/material";
 import Loading from "./Loading";
+import AddTodo from "./AddTodo";
 
-export default function CardList({ todos,loading }) {
-    if(loading){
-        return <Loading />
-    }
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function CardList({ todos, loading }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleEdit = (todo) => {
+    console.log("====================================");
+    console.log("edit todo", todo);
+    console.log("====================================");
+  };
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
       <Grid container spacing={2}>
@@ -29,18 +56,56 @@ export default function CardList({ todos,loading }) {
                     {todo?.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                  {todo?.description}
+                    {todo?.description}
                   </Typography>
                 </CardContent>
-                <CardActions style={{display: "flex", justifyContent: "center"}}>
-                  <Button size="small"  style={{backgroundColor: "black", color: "white"}}>Edit</Button>
-                  <Button size="small" style={{backgroundColor: "red", color: "white"}}>Delete</Button>
+                <CardActions
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Button
+                    size="small"
+                    style={{ backgroundColor: "black", color: "white" }}
+                    onClick={() => {
+                      handleClickOpen();
+                      handleEdit(todo);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    style={{ backgroundColor: "red", color: "white" }}
+                  >
+                    Delete
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
           </>
         ))}
       </Grid>
+
+      <div>
+        <Dialog
+          fullWidth
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              <AddTodo  />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose}>Agree</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </Box>
   );
 }
