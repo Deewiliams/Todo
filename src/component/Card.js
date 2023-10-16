@@ -7,7 +7,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import { Box, Grid } from "@mui/material";
+import * as mutations from "../graphql/mutations";
 import Loading from "./Loading";
+import { API } from "aws-amplify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,11 +23,27 @@ export default function CardList({
   setSelectedTodo,
 }) {
 
+  const [isDeleting, setIsDeleting] = React.useState(false)
+  
   const handleEdit = (todo) => {
     setSelectedTodo(todo?.id);
     formik.setFieldValue("title", todo.title);
     formik.setFieldValue("description", todo.description);
   };
+
+  const handleDelete = async (todo) => {
+    setIsDeleting(true)
+    await API.graphql({
+      query: mutations.deleteAddTodoList,
+      variables: {
+        input: {
+          id: todo?.id,
+        },
+      },
+    });
+    setIsDeleting(false)
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -65,8 +83,12 @@ export default function CardList({
                   <Button
                     size="small"
                     style={{ backgroundColor: "red", color: "white" }}
+                    onClick={() => {
+                      handleDelete(todo);
+                    }}
                   >
-                    Delete
+                    {isDeleting && isDeleting ? "Deleting..." :  "Delete" }
+                   
                   </Button>
                 </CardActions>
               </Card>

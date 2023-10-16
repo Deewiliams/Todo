@@ -16,8 +16,6 @@ export default function MainPage() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const username = JSON.parse(localStorage.getItem("verifyCodeEmail"));
 
- 
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };

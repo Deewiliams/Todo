@@ -1,19 +1,9 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import Card from "../component/Card";
 import { Container } from "@mui/material";
 import * as queries from "../graphql/queries";
 import { API } from "aws-amplify";
 import Search from "../component/Search";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 export default function ListTodo({ formik, handleClickOpen, setSelectedTodo }) {
   const id = JSON.parse(localStorage.getItem("userID"));
