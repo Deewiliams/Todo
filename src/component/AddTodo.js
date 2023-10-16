@@ -15,6 +15,7 @@ import {
   createTodoSchema,
 } from "../utils/schema/createTodo";
 import * as mutations from "../graphql/mutations";
+import * as queries from "../graphql/queries";
 import { API } from "aws-amplify";
 import LoadingButton from "./LoadingButton";
 
@@ -27,6 +28,8 @@ export default function AddTodo() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [selectedTodo, setSelectedTodo] = React.useState();
+  const [todos, setTodos] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = function () {
@@ -53,6 +56,8 @@ export default function AddTodo() {
               },
             },
           });
+          fetchAllTodos()
+          handleClose()
         } else {
           await API.graphql({
             query: mutations.createAddTodoList,
@@ -66,11 +71,32 @@ export default function AddTodo() {
           });
         }
         setIsLoading(false);
+        fetchAllTodos()
+        handleClose()
       } catch (error) {
         setErrorMessage(error.message);
       }
     },
   });
+
+
+  const fetchAllTodos = async () => {
+    try {
+      setLoading(true);
+      const listTodos = await API.graphql({
+        query: queries.listAddTodoLists,
+        variables: { id: id },
+      });
+      setTodos(listTodos?.data?.listAddTodoLists?.items);
+      setLoading(false);
+    } catch (error) {
+      console.log("errror", error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchAllTodos();
+  }, [id]);
   return (
     <>
       <div
@@ -159,9 +185,12 @@ export default function AddTodo() {
         </Dialog>
       </div>
       <ListTodo
+        todos={todos}
+        loading={loading}
         formik={formik}
         handleClickOpen={handleClickOpen}
         setSelectedTodo={setSelectedTodo}
+        fetchAllTodos={fetchAllTodos}
       />
     </>
   );

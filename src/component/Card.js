@@ -21,10 +21,11 @@ export default function CardList({
   formik,
   handleClickOpen,
   setSelectedTodo,
+  fetchAllTodos
 }) {
 
   const [isDeleting, setIsDeleting] = React.useState(false)
-  
+
   const handleEdit = (todo) => {
     setSelectedTodo(todo?.id);
     formik.setFieldValue("title", todo.title);
@@ -42,6 +43,7 @@ export default function CardList({
       },
     });
     setIsDeleting(false)
+    fetchAllTodos()
   };
 
   if (loading) {
@@ -61,7 +63,7 @@ export default function CardList({
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    {todo?.title}
+                    {todo?.title?.substring(0,16)} ...
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {todo?.description}
@@ -72,7 +74,7 @@ export default function CardList({
                 >
                   <Button
                     size="small"
-                    style={{ backgroundColor: "black", color: "white" }}
+                    style={{ backgroundColor: "black", color: "white",textTransform: "none" }}
                     onClick={() => {
                       handleClickOpen();
                       handleEdit(todo);
@@ -82,7 +84,7 @@ export default function CardList({
                   </Button>
                   <Button
                     size="small"
-                    style={{ backgroundColor: "red", color: "white" }}
+                    style={{ backgroundColor: "red", color: "white",textTransform: "none" }}
                     onClick={() => {
                       handleDelete(todo);
                     }}
