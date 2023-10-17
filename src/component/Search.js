@@ -13,7 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Search() {
+export default function Search({ query, setQuery }) {
   return (
     <Box sx={{ flexGrow: 1, marginTop: "20px" }}>
       <Grid container spacing={2}>
@@ -23,6 +23,8 @@ export default function Search() {
             id="outlined-basic"
             variant="outlined"
             placeholder="Search your todo list by title"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
           />
         </Grid>
       </Grid>

@@ -30,6 +30,7 @@ export default function AddTodo() {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [selectedTodo, setSelectedTodo] = React.useState();
   const [todos, setTodos] = React.useState([]);
+  const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -43,7 +44,7 @@ export default function AddTodo() {
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
-    onSubmit: async (values,{resetForm}) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         setIsLoading(true);
         if (selectedTodo) {
@@ -57,8 +58,8 @@ export default function AddTodo() {
               },
             },
           });
-          fetchAllTodos()
-          handleClose()
+          fetchAllTodos();
+          handleClose();
         } else {
           await API.graphql({
             query: mutations.createAddTodoList,
@@ -72,15 +73,14 @@ export default function AddTodo() {
           });
         }
         setIsLoading(false);
-        resetForm()
-        fetchAllTodos()
-        handleClose()
+        resetForm();
+        fetchAllTodos();
+        handleClose();
       } catch (error) {
         setErrorMessage(error.message);
       }
     },
   });
-
 
   const fetchAllTodos = async () => {
     try {
@@ -186,6 +186,8 @@ export default function AddTodo() {
           </DialogActions>
         </Dialog>
       </div>
+
+     
       <ListTodo
         todos={todos}
         loading={loading}
@@ -193,6 +195,8 @@ export default function AddTodo() {
         handleClickOpen={handleClickOpen}
         setSelectedTodo={setSelectedTodo}
         fetchAllTodos={fetchAllTodos}
+        query={query}
+        setQuery={setQuery}
       />
     </>
   );

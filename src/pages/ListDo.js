@@ -10,10 +10,12 @@ export default function ListTodo({
   loading,
   fetchAllTodos,
   todos,
+  query,
+  setQuery,
 }) {
   return (
     <Container>
-      <Search />
+      <Search todos={todos} query={query} setQuery={setQuery} />
       <Card
         todos={todos}
         loading={loading}
@@ -21,6 +23,7 @@ export default function ListTodo({
         handleClickOpen={handleClickOpen}
         setSelectedTodo={setSelectedTodo}
         fetchAllTodos={fetchAllTodos}
+        query={query}
       />
     </Container>
   );
