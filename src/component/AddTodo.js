@@ -127,7 +127,7 @@ export default function AddTodo() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+          <DialogTitle>{"Add your todo list here"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               <br />
@@ -176,7 +176,7 @@ export default function AddTodo() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose}>Cancel</Button>
             <Button
               onClick={formik.handleSubmit}
               style={{ backgroundColor: "black", color: "white" }}
@@ -187,7 +187,6 @@ export default function AddTodo() {
         </Dialog>
       </div>
 
-     
       <ListTodo
         todos={todos}
         loading={loading}
