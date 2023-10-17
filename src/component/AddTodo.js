@@ -18,7 +18,6 @@ import * as mutations from "../graphql/mutations";
 import * as queries from "../graphql/queries";
 import { API } from "aws-amplify";
 import LoadingButton from "./LoadingButton";
-import Search from "./Search";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -30,6 +29,7 @@ export default function AddTodo() {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [selectedTodo, setSelectedTodo] = React.useState();
   const [todos, setTodos] = React.useState([]);
+  const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -43,7 +43,7 @@ export default function AddTodo() {
   const formik = useFormik({
     initialValues: createTodoInitialvalues,
     validationSchema: createTodoSchema,
-    onSubmit: async (values,{resetForm}) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         setIsLoading(true);
         if (selectedTodo) {
@@ -57,8 +57,8 @@ export default function AddTodo() {
               },
             },
           });
-          fetchAllTodos()
-          handleClose()
+          fetchAllTodos();
+          handleClose();
         } else {
           await API.graphql({
             query: mutations.createAddTodoList,
@@ -72,15 +72,14 @@ export default function AddTodo() {
           });
         }
         setIsLoading(false);
-        resetForm()
-        fetchAllTodos()
-        handleClose()
+        resetForm();
+        fetchAllTodos();
+        handleClose();
       } catch (error) {
         setErrorMessage(error.message);
       }
     },
   });
-
 
   const fetchAllTodos = async () => {
     try {
@@ -127,7 +126,7 @@ export default function AddTodo() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+          <DialogTitle>{"Add your todo list here"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               <br />
@@ -176,7 +175,7 @@ export default function AddTodo() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose}>Cancel</Button>
             <Button
               onClick={formik.handleSubmit}
               style={{ backgroundColor: "black", color: "white" }}
@@ -186,6 +185,7 @@ export default function AddTodo() {
           </DialogActions>
         </Dialog>
       </div>
+
       <ListTodo
         todos={todos}
         loading={loading}
@@ -193,6 +193,8 @@ export default function AddTodo() {
         handleClickOpen={handleClickOpen}
         setSelectedTodo={setSelectedTodo}
         fetchAllTodos={fetchAllTodos}
+        query={query}
+        setQuery={setQuery}
       />
     </>
   );

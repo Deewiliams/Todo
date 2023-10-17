@@ -21,7 +21,8 @@ export default function CardList({
   formik,
   handleClickOpen,
   setSelectedTodo,
-  fetchAllTodos
+  fetchAllTodos,
+  query
 }) {
 
   const [isDeleting, setIsDeleting] = React.useState(false)
@@ -52,7 +53,14 @@ export default function CardList({
   return (
     <Box sx={{ flexGrow: 1, marginTop: "50px" }}>
       <Grid container spacing={2}>
-        {todos?.map((todo) => (
+      {todos &&
+        todos.filter((todo) => {
+          if (query === "") {
+            return todo;
+          } else if (todo.title.toLowerCase().includes(query.toLowerCase())) {
+            return todo;
+          }
+        }).map((todo) => (
           <>
             <Grid item xs={12} sm={6} md={3} lg={3}>
               <Card sx={{ maxWidth: 345 }}>
@@ -97,6 +105,7 @@ export default function CardList({
             </Grid>
           </>
         ))}
+       
       </Grid>
     </Box>
   );

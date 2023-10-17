@@ -79,6 +79,7 @@ export default function MainPage() {
       <Container>
         <DialogModel />
       </Container>
+      
     </Box>
   );
 }
