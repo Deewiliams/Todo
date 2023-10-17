@@ -18,7 +18,6 @@ import * as mutations from "../graphql/mutations";
 import * as queries from "../graphql/queries";
 import { API } from "aws-amplify";
 import LoadingButton from "./LoadingButton";
-import Search from "./Search";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
